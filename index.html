@@ -1,43 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="game">
 <head>
     <meta charset="UTF-8">
-    <title>Speech recognition</title>
+    <title>Speech recognition: bingo game </title>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/app.css" rel="stylesheet">
 </head>
-<body>
-<script src="./app.js"></script>
-<label>
-    <input class="output" type="text">
-</label>
+<body ng-controller="BingoCtrl">
+<button ng-disabled="disabled">Start speech recognition</button>
+
+<div>
+    <p class="phrase">Phrase...</p>
+    <p class="result">Right or wrong?</p>
+    <p class="output">...diagnostic messages</p>
+</div>
 <table class="table table-bordered">
-    <thead>
+    <tbody ng-repeat="row in bingoBoard">
     <tr>
-        <th>#</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Username</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
+        <td ng-class="checkHighlight(row[0])">{{row[0]}}</td>
+        <td ng-class="checkHighlight(row[1])">{{row[1]}}</td>
+        <td ng-class="checkHighlight(row[2])">{{row[2]}}</td>
+        <td ng-class="checkHighlight(row[3])">{{row[3]}}</td>
+        <td ng-class="checkHighlight(row[4])">{{row[4]}}</td>
     </tr>
     </tbody>
 </table>
+<script src="/bower_components/angular/angular.min.js"></script>
+<script src="/bower_components/lodash/dist/lodash.min.js"></script>
+<script src="/app.js"></script>
 </body>
 </html>
