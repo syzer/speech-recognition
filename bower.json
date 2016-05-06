@@ -1,0 +1,21 @@
+{
+  "name": "speech-recognition",
+  "homepage": "https://github.com/syzer/speech-recognition",
+  "authors": [
+    "syzer3@gmail.com <syzer3@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lodash": "^4.11.2"
+  }
+}
