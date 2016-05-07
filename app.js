@@ -1,61 +1,6 @@
-var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
-var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
-var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
-
-// TODO scram, Skyrim, scrub => scrum
-// ATM => ETL
-// Allen TX => analytics
-const phrases = [
-    'column oriented',
-    'vertical database',
-    'sharding',
-    'ZooKeeper',
-    'data warehouse',
-    'column oriented database',
-    'realtime analytics',
-    'hive',
-    'ETL',
-    'Kafka',
-    'data volume',
-    'fast data',
-    'mapreduce',
-    'data cloud',
-    'Cassandra',
-    'realtime',
-    'analytics',
-    'unstructured data',
-    'scoop',
-    'no sequel',
-    'big data',
-    'scrum',
-    'data warehouse',
-    'e-commerce',
-    'performance'
-]
-
-const binBy = (groupSize, arr) => (arr).reduce((acc, curr, i) => {
-    acc[i % groupSize] = acc[i % groupSize] || []
-    acc[i % groupSize].push(curr)
-    return acc
-}, [])
-
-var bingoBoard = binBy(5, phrases)
-
-var phrasePara = document.querySelector('.phrase')
-var resultPara = document.querySelector('.result')
-var diagnosticPara = document.querySelector('.output')
-var testBtn = document.querySelector('button')
-
-function playBingo() {
-    testBtn.disabled = true
-    testBtn.textContent = 'Test in progress'
-
-    var phrase = _.sample(phrases)
-    phrasePara.textContent = phrase
-    resultPara.textContent = 'Right or wrong?'
-    resultPara.style.background = 'rgba(0,0,0,0.2)'
-    diagnosticPara.textContent = '...diagnostic messages'
-
+function recognizeSpeech(phrases) {
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+    var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
     var grammar = '#JSGF V1.0; grammar phrase; public <phrase> = ' + phrases.join(' | ') + ';';
     var recognition = new SpeechRecognition()
     var speechRecognitionList = new SpeechGrammarList()
@@ -67,35 +12,19 @@ function playBingo() {
     recognition.maxAlternatives = 1
 
     recognition.start()
-
-    // SpeechRecognitionAlternative
-    recognition.onresult = (event) => {
-        var lastResult = _.last(event.results)[0]
-        var speechTranscript = lastResult.transcript
-        console.log(speechTranscript, event)
-        diagnosticPara.textContent = 'Speech received: ' + speechTranscript + '.'
-        if (speechTranscript.toLowerCase() === phrase.toLowerCase()) {
-            resultPara.textContent = 'I heard the correct phrase!'
-            resultPara.style.background = 'lime'
-        } else {
-            resultPara.textContent = 'That didn\'t sound right.'
-            resultPara.style.background = 'red'
-        }
-
-        console.log('Confidence', lastResult.confidence)
-    }
-
     recognition.onspeechend = () => {
         // recognition.stop()
-        testBtn.disabled = false
-        testBtn.textContent = 'Start new test'
     }
 
     recognition.onerror = (event) => console.error(event)
 
+    return {
+        recognition
+    }
+
 }
 
-testBtn.addEventListener('click', playBingo)
+testBtn.addEventListener('click', recognizeSpeech)
 
 let bingoMatch = [
     _.times(5, _.constant(0)),
@@ -121,17 +50,8 @@ const isBingoCols = (bingoMatch) => {
     }
     return false
 }
-const isBingo = (arr) => isBingoCols(arr) || isBingoRows(arr)
 
-const test = () => {
-    bingoMatch[0] = _.times(5, _.constant(1))
-    for (let i in bingoMatch) {
-        bingoMatch[i][0] = 1
-    }
-    console.log(isBingoCols(bingoMatch))
-    console.log(isBingoRows(bingoMatch))
-    console.warn(isBingo(bingoMatch))
-}
+const isBingo = (arr) => isBingoCols(arr) || isBingoRows(arr)
 
 const maybeMark = (phrase, bingoBoard, bingoMatch) => {
     bingoBoard.filter((row, i) => {
@@ -145,15 +65,76 @@ const maybeMark = (phrase, bingoBoard, bingoMatch) => {
     })
 }
 
-maybeMark('ETL', bingoBoard, bingoMatch)
-maybeMark('column oriented', bingoBoard, bingoMatch)
-console.log(bingoMatch)
+const binBy = (groupSize, arr) => (arr).reduce((acc, curr, i) => {
+    acc[i % groupSize] = acc[i % groupSize] || []
+    acc[i % groupSize].push(curr)
+    return acc
+}, [])
 
 angular
     .module('game', [])
-    .controller('BingoCtrl', function ($scope) {
-        $scope.bingoBoard = bingoBoard
-        $scope.picked = 'ETL'
-        const isPicked = (word) => word === $scope.picked
-        $scope.checkHighlight = (word) => isPicked(word) ? 'picked' : ''
-    })
+    .controller('BingoCtrl', BingoCtrl)
+
+function BingoCtrl($scope) {
+    let recognition
+    $scope.totalMatchedWords = []
+    const phrases = [
+        'column oriented',
+        'vertical database',
+        'sharding',
+        'ZooKeeper',
+        'data warehouse',
+        'column oriented database',
+        'realtime analytics',
+        'hive',
+        'ETL',
+        'Kafka',
+        'data volume',
+        'fast data',
+        'mapreduce',
+        'data cloud',
+        'Cassandra',
+        'realtime',
+        'analytics',
+        'unstructured data',
+        'scoop',
+        'no sequel',
+        'big data',
+        'scrum',
+        'data warehouse',
+        'e-commerce',
+        'performance'
+    ]
+    $scope.bingoBoard = binBy(5, phrases)
+    $scope.startRecognizing = () => {
+        recognition = recognizeSpeech(phases)
+        recognition.onresult = (event) => {
+            let lastResult = _.last(event.results)[0]
+            let speechTranscript = lastResult.transcript
+            console.log(speechTranscript, event)
+            console.log('Confidence', lastResult.confidence)
+            
+            if (speechTranscript.toLowerCase() === 'ETL'.toLowerCase()) {
+                //TODO
+            }
+        }
+    }
+    let testRecognition = 'ETL is much wow and column oriented'
+
+    const newMatchedWords = (trancript) =>
+        testRecognition
+            .split(' ')
+            .filter(word => phrases.find(p => p === word))
+
+    maybeMark('ETL', bingoBoard, bingoMatch)
+    maybeMark('column oriented', bingoBoard, bingoMatch)
+
+
+    $scope.totalMatchedWords = $scope.totalMatchedWords
+        .concat(newMatchedWords(testRecognition))
+
+    $scope.picked = 'ETL'
+
+    const isPicked = (word) => word === $scope.picked
+    $scope.checkHighlight = (word) => isPicked(word) ? 'picked' : ''
+}
