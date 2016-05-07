@@ -6,3 +6,8 @@ Use fft and ML classifier to play BS bingo
 transription.map => [guessWords].filter => [matchedWords] 
  [totalMatcheWords].concat([matchedWords])
   hilight/check end game
+
+
+// TODO scram, Skyrim, scrub => scrum
+// ATM => ETL
+// Allen TX => analytics
