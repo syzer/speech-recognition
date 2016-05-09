@@ -1,3 +1,4 @@
+
 function recognizeSpeech(phrases) {
     var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
     var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
@@ -18,13 +19,8 @@ function recognizeSpeech(phrases) {
 
     recognition.onerror = (event) => console.error(event)
 
-    return {
-        recognition
-    }
-
+    return recognition
 }
-
-testBtn.addEventListener('click', recognizeSpeech)
 
 let bingoMatch = [
     _.times(5, _.constant(0)),
@@ -77,7 +73,6 @@ angular
 
 function BingoCtrl($scope) {
     let recognition
-    $scope.totalMatchedWords = []
     const phrases = [
         'column oriented',
         'vertical database',
@@ -105,36 +100,26 @@ function BingoCtrl($scope) {
         'e-commerce',
         'performance'
     ]
+    $scope.picked = []
     $scope.bingoBoard = binBy(5, phrases)
     $scope.startRecognizing = () => {
-        recognition = recognizeSpeech(phases)
+        recognition = recognizeSpeech(phrases)
         recognition.onresult = (event) => {
             let lastResult = _.last(event.results)[0]
             let speechTranscript = lastResult.transcript
             console.log(speechTranscript, event)
             console.log('Confidence', lastResult.confidence)
-            
-            if (speechTranscript.toLowerCase() === 'ETL'.toLowerCase()) {
-                //TODO
-            }
         }
     }
-    let testRecognition = 'ETL is much wow and column oriented'
+    let testRecognition = 'ETL is much wow and column oriented, much hive'
 
     const newMatchedWords = (trancript) =>
-        testRecognition
-            .split(' ')
-            .filter(word => phrases.find(p => p === word))
+        phrases.filter(p => _.includes(trancript, p))
 
-    maybeMark('ETL', bingoBoard, bingoMatch)
-    maybeMark('column oriented', bingoBoard, bingoMatch)
-
-
-    $scope.totalMatchedWords = $scope.totalMatchedWords
+    //TODO
+    $scope.picked = $scope.picked
         .concat(newMatchedWords(testRecognition))
 
-    $scope.picked = 'ETL'
-
-    const isPicked = (word) => word === $scope.picked
-    $scope.checkHighlight = (word) => isPicked(word) ? 'picked' : ''
+    const isPicked = (word) => _.includes($scope.picked, word)
+    $scope.isHighlight = (word) => isPicked(word) ? 'picked' : ''
 }

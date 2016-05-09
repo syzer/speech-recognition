@@ -17,11 +17,11 @@
 <table class="table table-bordered">
     <tbody ng-repeat="row in bingoBoard">
     <tr>
-        <td ng-class="checkHighlight(row[0])">{{row[0]}}</td>
-        <td ng-class="checkHighlight(row[1])">{{row[1]}}</td>
-        <td ng-class="checkHighlight(row[2])">{{row[2]}}</td>
-        <td ng-class="checkHighlight(row[3])">{{row[3]}}</td>
-        <td ng-class="checkHighlight(row[4])">{{row[4]}}</td>
+        <td ng-class="isHighlight(row[0])">{{row[0]}}</td>
+        <td ng-class="isHighlight(row[1])">{{row[1]}}</td>
+        <td ng-class="isHighlight(row[2])">{{row[2]}}</td>
+        <td ng-class="isHighlight(row[3])">{{row[3]}}</td>
+        <td ng-class="isHighlight(row[4])">{{row[4]}}</td>
     </tr>
     </tbody>
 </table>
