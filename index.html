@@ -7,8 +7,6 @@
     <link href="/app.css" rel="stylesheet">
 </head>
 <body ng-controller="BingoCtrl">
-<button ng-disabled="disabled" ng-click="startRecognizing()">Start speech recognition</button>
-
 <table class="table table-bordered">
     <tbody ng-repeat="row in bingoBoard">
     <tr>
@@ -20,6 +18,7 @@
     </tr>
     </tbody>
 </table>
+<button ng-disabled="disabled" ng-click="startRecognizing()">Start speech recognition</button>
 <div>
     <p class="phrase">{{transcript}}</p>
     <p> {{picked|json}}</p>
