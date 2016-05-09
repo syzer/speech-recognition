@@ -1,4 +1,3 @@
-
 function recognizeSpeech(phrases) {
     var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
     var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
@@ -71,35 +70,54 @@ angular
     .module('game', [])
     .controller('BingoCtrl', BingoCtrl)
 
+const phrases = [
+    'column oriented',
+    'vertical database',
+    'sharding',
+    'ZooKeeper',
+    'data warehouse',
+    'Hadoop',
+    'velocity',
+    'hive',
+    'ETL',
+    'Kafka',
+    'data volume',
+    'fast data',
+    'mapreduce',
+    'data cloud',
+    'Cassandra',
+    'real-time',
+    'analytics',
+    'unstructured data',
+    'scoop',
+    'no sequel',
+    'big data',
+    'scrum',
+    'data warehouse',
+    'e-commerce',
+    'performance'
+]
+
+const similarSounding = (w) => {
+    return {
+        atm: 'etl',
+        atl: 'etl',
+        'allen tx': 'analytics',
+        btl: 'etl',
+        costco: 'kafka',
+        charting: 'sharding',
+        hi: 'hive',
+        higher: 'hive',
+        scrub: 'scrum',
+        scram: 'scrum',
+        skyrim: 'scrum',
+        translator: 'fast data'
+    }[w] || w
+}
+
 function BingoCtrl($scope) {
     let recognition
-    const phrases = [
-        'column oriented',
-        'vertical database',
-        'sharding',
-        'ZooKeeper',
-        'data warehouse',
-        'column oriented database',
-        'realtime analytics',
-        'hive',
-        'ETL',
-        'Kafka',
-        'data volume',
-        'fast data',
-        'mapreduce',
-        'data cloud',
-        'Cassandra',
-        'real-time',
-        'analytics',
-        'unstructured data',
-        'scoop',
-        'no sequel',
-        'big data',
-        'scrum',
-        'data warehouse',
-        'e-commerce',
-        'performance'
-    ]
+
     $scope.picked = []
     $scope.bingoBoard = binBy(5, phrases)
     $scope.transcript = ''
@@ -108,18 +126,27 @@ function BingoCtrl($scope) {
         recognition.onresult = (event) => {
             let lastResult = _.last(event.results)[0]
             let speechTranscript = _.toLower(lastResult.transcript)
-            console.log(speechTranscript, event)
-            console.log('Confidence', lastResult.confidence)
-            
-            $scope.transcript += speechTranscript
-            $scope.picked = $scope.picked
-                .concat(newMatchedWords(speechTranscript))
+                .split(' ')
+                .map(similarSounding)
+                .join(' ')
+
+            console.log(speechTranscript, lastResult.transcript, lastResult.confidence)
+
+            $scope.transcript += ' ' + speechTranscript
+                    .split(' ')
+                    .map(similarSounding)
+                    .join(' ')
+
+            $scope.picked = _.uniq($scope.picked
+                .concat(newMatchedWords(speechTranscript)))
+
             $scope.$apply()
         }
     }
 
-    const newMatchedWords = (trancript) =>
-        phrases.map(_.toLower).filter(p => _.includes(trancript, p))
+    const newMatchedWords = (transcript) =>
+        phrases.map(_.toLower)
+            .filter(p => _.includes(transcript, p))
 
     const isPicked = (word) => _.includes($scope.picked, _.toLower(word))
     $scope.isHighlight = (word) => isPicked(word) ? 'picked' : ''
