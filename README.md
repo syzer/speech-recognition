@@ -8,11 +8,6 @@ transription.map => [guessWords].filter => [matchedWords]
   hilight/check end game
 
 
-// TODO scram, Skyrim, scrub => scrum
-// ATM, atl => ETL
-// Allen TX => analytics
-
-
 # How
 
 ```
