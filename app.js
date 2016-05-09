@@ -105,23 +105,33 @@ const similarSounding = (w) => ({
     'allen tx': 'analytics',
     btl: 'etl',
     bigcommerce: 'e-commerce',
+    buzz: 'fast data',
     call: 'cloud',
     costco: 'kafka',
     common: 'column oriented',
     charlene: 'charlene',
     charting: 'sharding',
     charging: 'sharding',
+    columbia: 'column oriented',
+    construction: 'unstructured data',
+    ecommerce: 'e-commerce',
     harding: 'sharding',
     hi: 'hive',
     higher: 'hive',
+    mount: 'mapreduce',
     reduce: 'mapreduce',
     santa: 'fast data',
     patagonia: 'data volume',
+    oriented: 'column oriented',
+    reviews: 'mapreduce',
     scrub: 'scrum',
     scram: 'scrum',
     school: 'scoop',
     skyrim: 'scrum',
     starting: 'sharding',
+    structured: 'unstructured data',
+    sequel: 'no sequel',
+    squad: 'scoop',
     translator: 'fast data',
     understanding: 'sharding',
     verdict: 'vertical'
@@ -145,10 +155,6 @@ function BingoCtrl($scope) {
             console.log(speechTranscript, lastResult.transcript, lastResult.confidence)
 
             $scope.transcript += ' ' + speechTranscript
-                    .split(' ')
-                    .map(similarSounding)
-                    .join(' ')
-
             $scope.picked = _.uniq($scope.picked
                 .concat(newMatchedWords(speechTranscript)))
 
