@@ -13,4 +13,4 @@ transription.map => [guessWords].filter => [matchedWords]
 ```
 serve ./ -p 9009
 ```
-Verified to work with *chrome*
+Verified    to work with *chrome*

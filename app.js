@@ -84,7 +84,7 @@ const phrases = [
     'data volume',
     'fast data',
     'mapreduce',
-    'data cloud',
+    'cloud',
     'Cassandra',
     'real-time',
     'analytics',
@@ -98,22 +98,34 @@ const phrases = [
     'performance'
 ]
 
-const similarSounding = (w) => {
-    return {
-        atm: 'etl',
-        atl: 'etl',
-        'allen tx': 'analytics',
-        btl: 'etl',
-        costco: 'kafka',
-        charting: 'sharding',
-        hi: 'hive',
-        higher: 'hive',
-        scrub: 'scrum',
-        scram: 'scrum',
-        skyrim: 'scrum',
-        translator: 'fast data'
-    }[w] || w
-}
+const similarSounding = (w) => ({
+    atm: 'etl',
+    atl: 'etl',
+    guitar: 'data',
+    'allen tx': 'analytics',
+    btl: 'etl',
+    bigcommerce: 'e-commerce',
+    call: 'cloud',
+    costco: 'kafka',
+    common: 'column oriented',
+    charlene: 'charlene',
+    charting: 'sharding',
+    charging: 'sharding',
+    harding: 'sharding',
+    hi: 'hive',
+    higher: 'hive',
+    reduce: 'mapreduce',
+    santa: 'fast data',
+    patagonia: 'data volume',
+    scrub: 'scrum',
+    scram: 'scrum',
+    school: 'scoop',
+    skyrim: 'scrum',
+    starting: 'sharding',
+    translator: 'fast data',
+    understanding: 'sharding',
+    verdict: 'vertical'
+}[w] || w)
 
 function BingoCtrl($scope) {
     let recognition
