@@ -89,7 +89,7 @@ function BingoCtrl($scope) {
         'mapreduce',
         'data cloud',
         'Cassandra',
-        'realtime',
+        'real-time',
         'analytics',
         'unstructured data',
         'scoop',
@@ -102,24 +102,25 @@ function BingoCtrl($scope) {
     ]
     $scope.picked = []
     $scope.bingoBoard = binBy(5, phrases)
+    $scope.transcript = ''
     $scope.startRecognizing = () => {
         recognition = recognizeSpeech(phrases)
         recognition.onresult = (event) => {
             let lastResult = _.last(event.results)[0]
-            let speechTranscript = lastResult.transcript
+            let speechTranscript = _.toLower(lastResult.transcript)
             console.log(speechTranscript, event)
             console.log('Confidence', lastResult.confidence)
+            
+            $scope.transcript += speechTranscript
+            $scope.picked = $scope.picked
+                .concat(newMatchedWords(speechTranscript))
+            $scope.$apply()
         }
     }
-    let testRecognition = 'ETL is much wow and column oriented, much hive'
 
     const newMatchedWords = (trancript) =>
-        phrases.filter(p => _.includes(trancript, p))
+        phrases.map(_.toLower).filter(p => _.includes(trancript, p))
 
-    //TODO
-    $scope.picked = $scope.picked
-        .concat(newMatchedWords(testRecognition))
-
-    const isPicked = (word) => _.includes($scope.picked, word)
+    const isPicked = (word) => _.includes($scope.picked, _.toLower(word))
     $scope.isHighlight = (word) => isPicked(word) ? 'picked' : ''
 }

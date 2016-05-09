@@ -9,7 +9,7 @@ transription.map => [guessWords].filter => [matchedWords]
 
 
 // TODO scram, Skyrim, scrub => scrum
-// ATM => ETL
+// ATM, atl => ETL
 // Allen TX => analytics
 
 

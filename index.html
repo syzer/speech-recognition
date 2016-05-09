@@ -9,11 +9,6 @@
 <body ng-controller="BingoCtrl">
 <button ng-disabled="disabled" ng-click="startRecognizing()">Start speech recognition</button>
 
-<div>
-    <p class="phrase">Phrase...</p>
-    <p class="result">Right or wrong?</p>
-    <p class="output">...diagnostic messages</p>
-</div>
 <table class="table table-bordered">
     <tbody ng-repeat="row in bingoBoard">
     <tr>
@@ -25,6 +20,10 @@
     </tr>
     </tbody>
 </table>
+<div>
+    <p class="phrase">{{transcript}}</p>
+    <p> {{picked|json}}</p>
+</div>
 <script src="/bower_components/angular/angular.min.js"></script>
 <script src="/bower_components/lodash/dist/lodash.min.js"></script>
 <script src="/app.js"></script>
