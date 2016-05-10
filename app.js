@@ -1,4 +1,4 @@
-function recognizeSpeech(phrases) {
+function recognizeSpeech(phrases, onresult) {
     var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
     var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
     const grammar = '#JSGF V1.0; grammar phrase; public <phrase> = ' + phrases.join(' | ') + ';';
@@ -13,12 +13,9 @@ function recognizeSpeech(phrases) {
 
     recognition.start()
     recognition.onspeechend = () => {
-        // recognition.stop()
     }
-
     recognition.onerror = (event) => console.error(event)
-
-    return recognition
+    recognition.onresult = onresult
 }
 
 let bingoMatch = [
@@ -172,11 +169,10 @@ function BingoCtrl($scope) {
     $scope.picked = []
     $scope.bingoBoard = binBy(5, phrases)
     $scope.transcript = ''
-    $scope.startRecognizing = () => {
-        let recognition = recognizeSpeech(phrases)
-        recognition.onresult = (event) => {
-            let lastResult = _.last(event.results)[0]
-            let speechTranscript = _.toLower(lastResult.transcript)
+    $scope.startRecognizing = () =>
+        recognizeSpeech(phrases, (event) => {
+            const lastResult = _.last(event.results)[0]
+            const speechTranscript = _.toLower(lastResult.transcript)
                 .split(' ')
                 .map(similarSounding)
                 .join(' ')
@@ -188,8 +184,7 @@ function BingoCtrl($scope) {
                 .concat(newMatchedWords(speechTranscript)))
 
             $scope.$apply()
-        }
-    }
+        })
 
     const newMatchedWords = (transcript) =>
         phrases.map(_.toLower)
@@ -201,7 +196,7 @@ function BingoCtrl($scope) {
 
 // http://stackoverflow.com/questions/30207272/capitalize-the-first-letter-of-string-in-angularjs
 function capitalize() {
-    return function(str) {
+    return function (str) {
         return str.charAt(0).toUpperCase() + str.slice(1)
     }
 }
