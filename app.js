@@ -1,6 +1,6 @@
 function recognizeSpeech(phrases) {
-    const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
-    const SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+    var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
     const grammar = '#JSGF V1.0; grammar phrase; public <phrase> = ' + phrases.join(' | ') + ';';
     let recognition = new SpeechRecognition()
     let speechRecognitionList = new SpeechGrammarList()
@@ -70,7 +70,7 @@ angular
     .module('game', [])
     .controller('BingoCtrl', BingoCtrl)
 
-const phrases = [
+const phrases = _.shuffle([
     'column oriented',
     'vertical database',
     'sharding',
@@ -96,7 +96,7 @@ const phrases = [
     'data warehouse',
     'e-commerce',
     'performance'
-]
+])
 
 const similarSounding = (w) => ({
     atm: 'etl',
@@ -131,6 +131,8 @@ const similarSounding = (w) => ({
     higher: 'hive',
     hydro: 'hadoop',
     home: 'column oriented',
+    horton: 'data volume',
+    love: 'data volume',
     mount: 'mapreduce',
     produce: 'mapreduce',
     news: 'mapreduce',
