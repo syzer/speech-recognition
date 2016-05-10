@@ -7,21 +7,27 @@
     <link href="/app.css" rel="stylesheet">
 </head>
 <body ng-controller="BingoCtrl">
-<table class="table table-bordered">
-    <tbody ng-repeat="row in bingoBoard">
-    <tr>
-        <td ng-class="isHighlight(row[0])">{{row[0]}}</td>
-        <td ng-class="isHighlight(row[1])">{{row[1]}}</td>
-        <td ng-class="isHighlight(row[2])">{{row[2]}}</td>
-        <td ng-class="isHighlight(row[3])">{{row[3]}}</td>
-        <td ng-class="isHighlight(row[4])">{{row[4]}}</td>
-    </tr>
-    </tbody>
-</table>
-<button ng-disabled="disabled" ng-click="startRecognizing()">Start bingo</button>
-<div>
-    <p class="phrase">{{transcript}}</p>
-    <p>{{picked|json}}</p>
+<div class="container">
+    <div class=row>
+        <div class="col-md-6 col-md-offset-3">
+            <table class="table table-bordered">
+                <tbody ng-repeat="row in bingoBoard">
+                <tr>
+                    <td ng-class="isHighlight(row[0])">{{row[0]}}</td>
+                    <td ng-class="isHighlight(row[1])">{{row[1]}}</td>
+                    <td ng-class="isHighlight(row[2])">{{row[2]}}</td>
+                    <td ng-class="isHighlight(row[3])">{{row[3]}}</td>
+                    <td ng-class="isHighlight(row[4])">{{row[4]}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-lg btn-danger" ng-disabled="disabled" ng-click="startRecognizing()">Start bingo</button>
+            <div>
+                <p class="phrase">{{transcript}}</p>
+                <p>{{picked|json}}</p>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="/bower_components/angular/angular.min.js"></script>
 <script src="/bower_components/lodash/dist/lodash.min.js"></script>
