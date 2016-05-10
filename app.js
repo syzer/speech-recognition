@@ -213,7 +213,6 @@ function BingoCtrl($scope) {
             $scope.picked = _.uniq($scope.picked.concat(newMatchedWords(speechTranscript)))
             $scope.picked.map(w => maybeMark(w, $scope.bingoBoard, bingoBitmap))
             $scope.isBingo = isBingo(bingoBitmap)
-            console.log($scope.isBingo, isBingo(bingoBitmap))
 
             $scope.$apply()
         })
