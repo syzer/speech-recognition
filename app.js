@@ -46,17 +46,17 @@ const isBingoCols = (bingoBitmap) => {
 
 const isBingo = (arr) => isBingoCols(arr) || isBingoRows(arr)
 
-const maybeMark = (phrase, bingoBoard, bingoBitmap) => {
+const maybeMark = (phrase, bingoBoard, bingoBitmap) =>
     bingoBoard.filter((row, i) => {
         return row.filter((word, j)=> {
-            if (phrase === word) {
+            if (_.toLower(phrase) === _.toLower(word)) {
                 bingoBitmap[i][j] = 1
                 return true
             }
             return false
         })
     })
-}
+
 
 const binBy = (groupSize, arr) => (arr).reduce((acc, curr, i) => {
     acc[i % groupSize] = acc[i % groupSize] || []
@@ -129,6 +129,9 @@ const similarSounding = (w) => ({
     dictator: 'big data',
     ecommerce: 'e-commerce',
     finding: 'sharding',
+    firstdata: 'fast data',
+    first: 'fast data',
+    flowers: 'cloud',
     german: 'scrum',
     harding: 'sharding',
     hi: 'hive',
@@ -157,6 +160,8 @@ const similarSounding = (w) => ({
     oriented: 'column oriented',
     oriental: 'column oriented',
     reviews: 'mapreduce',
+    roaming: 'data volume',
+    mattresses: 'mapreduce',
     secret: 'no squel',
     sleep: 'no sequel',
     scrub: 'scrum',
@@ -177,6 +182,7 @@ const similarSounding = (w) => ({
     real: 'real-time',
     house: 'data warehouse',
     translator: 'fast data',
+    translate: 'fast data',
     tractor: 'unstructured data',
     time: 'real-time',
     understanding: 'sharding',
@@ -189,6 +195,7 @@ const similarSounding = (w) => ({
 }[w] || w)
 
 function BingoCtrl($scope) {
+    $scope.bingoBitmap = bingoBitmap
     $scope.isBingo = isBingo(bingoBitmap)
     $scope.picked = []
     $scope.bingoBoard = binBy(5, phrases)
@@ -200,15 +207,15 @@ function BingoCtrl($scope) {
                 .split(' ')
                 .map(similarSounding)
                 .join(' ')
+
             console.log(speechTranscript, ':', lastResult.transcript, lastResult.confidence)
 
             $scope.transcript += ' ' + speechTranscript
-            $scope.picked = _.uniq($scope.picked
-                .concat(newMatchedWords(speechTranscript)))
+            $scope.picked = _.uniq($scope.picked.concat(newMatchedWords(speechTranscript)))
             $scope.picked.map(w => maybeMark(w, $scope.bingoBoard, bingoBitmap))
             $scope.isBingo = isBingo(bingoBitmap)
-            console.log($scope.isBingo)
-            
+            console.log($scope.isBingo, isBingo(bingoBitmap))
+
             $scope.$apply()
         })
 
@@ -218,6 +225,7 @@ function BingoCtrl($scope) {
 
     const isPicked = (word) => _.includes($scope.picked, _.toLower(word))
     $scope.isHighlight = (word) => isPicked(word) ? 'picked' : ''
+    window.scope = $scope
 }
 
 // http://stackoverflow.com/questions/30207272/capitalize-the-first-letter-of-string-in-angularjs
