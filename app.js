@@ -26,9 +26,9 @@ let bingoMatch = [
     _.times(5, _.constant(0))
 ]
 
-const isBingoRows = (arr) => arr.map(
+const isBingoRows = (arr) => !! arr.find(
     line => line.reduce(_.add) === line.length
-).find(line => line) ? true : false
+)
 
 const isBingoCols = (bingoMatch) => {
     for (let i in bingoMatch) {
