@@ -21,13 +21,22 @@
                 </tr>
                 </tbody>
             </table>
-            <button class="btn btn-lg btn-danger"
-                    ng-click="startRecognizing()">Start bingo
+            <button class="btn btn-lg btn-danger" ng-click="startRecognizing()">
+                Start bingo
+            </button>
+            <button class="btn btn-lg btn-success" ng-show="isBingo">
+                BINGO!
             </button>
             <div>
-                <p>Press start and try BS sentences:</p>
-                <p>"Data volume is the size of the data"</p>
-                <p>"Scrum increases velocity and productivity"</p>
+                <h4>Press start and try BS sentences:</h4>
+                <blockquote>
+                    <p>Data volume is the size of the data</p>
+                    <footer>Some famous <cite title="Source Title">Senior Database Architect</cite></footer>
+                </blockquote>
+                <blockquote>
+                    <p>Scrum increases velocity and productivity</p>
+                    <footer>Some eaiger <cite title="Source Title">Scrum Master</cite></footer>
+                </blockquote>
                 <p class="phrase">{{transcript}}</p>
                 <p>{{picked|json}}</p>
             </div>
