@@ -69,6 +69,7 @@ const binBy = (groupSize, arr) => (arr).reduce((acc, curr, i) => {
 angular
     .module('game', [])
     .controller('BingoCtrl', BingoCtrl)
+    .filter('capitalize', capitalize)
 
 const phrases = _.shuffle([
     'column oriented',
@@ -196,4 +197,11 @@ function BingoCtrl($scope) {
 
     const isPicked = (word) => _.includes($scope.picked, _.toLower(word))
     $scope.isHighlight = (word) => isPicked(word) ? 'picked' : ''
+}
+
+// http://stackoverflow.com/questions/30207272/capitalize-the-first-letter-of-string-in-angularjs
+function capitalize() {
+    return function(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
 }

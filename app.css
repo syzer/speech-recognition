@@ -9,3 +9,8 @@
 .container {
     margin-top: 50px;
 }
+
+td {
+    height: 50px;
+    overflow: auto;
+}
