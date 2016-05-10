@@ -142,9 +142,11 @@ const similarSounding = (w) => ({
     home: 'column oriented',
     horton: 'data volume',
     knife: 'hive',
+    kobe: 'column oriented',
     life: 'hive',
     love: 'data volume',
     mount: 'mapreduce',
+    maureen: 'column oritented',
     produce: 'mapreduce',
     performers: 'performance',
     news: 'mapreduce',
@@ -182,7 +184,8 @@ const similarSounding = (w) => ({
     vertica: 'vertical database',
     volume: 'data volume',
     vertical: 'vertical database',
-    warehouse: 'data warehouse'
+    warehouse: 'data warehouse',
+    warehousing: 'data warehouse'
 }[w] || w)
 
 function BingoCtrl($scope) {
