@@ -171,6 +171,7 @@ const similarSounding = (w) => ({
     school: 'scoop',
     skyrim: 'scrum',
     sharing: 'sharding',
+    sequins: 'sharding',
     spawn: 'scoop',
     starting: 'sharding',
     strong: 'scrum',
@@ -199,7 +200,6 @@ function BingoCtrl($scope) {
     $scope.isBingo = isBingo(bingoBitmap)
     $scope.picked = []
     $scope.bingoBoard = binBy(5, phrases)
-    $scope.transcript = ''
     $scope.startRecognizing = () =>
         recognizeSpeech(phrases, (event) => {
             const lastResult = _.last(event.results)[0]
@@ -210,7 +210,6 @@ function BingoCtrl($scope) {
 
             console.log(speechTranscript, ':', lastResult.transcript, lastResult.confidence)
 
-            $scope.transcript += ' ' + speechTranscript
             $scope.picked = _.uniq($scope.picked.concat(newMatchedWords(speechTranscript)))
             $scope.picked.map(w => maybeMark(w, $scope.bingoBoard, bingoBitmap))
             $scope.isBingo = isBingo(bingoBitmap)
