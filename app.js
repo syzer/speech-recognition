@@ -1,9 +1,9 @@
-function recognizeSpeech(phrases, onresult) {
-    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
-    var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
-    var grammar = '#JSGF V1.0; grammar phrase; public <phrase> = ' + phrases.join(' | ') + ';';
-    var recognition = new SpeechRecognition()
-    var speechRecognitionList = new SpeechGrammarList()
+function recognizeSpeech(phrases) {
+    const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+    const SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
+    const grammar = '#JSGF V1.0; grammar phrase; public <phrase> = ' + phrases.join(' | ') + ';';
+    let recognition = new SpeechRecognition()
+    let speechRecognitionList = new SpeechGrammarList()
     speechRecognitionList.addFromString(grammar, 1)
     recognition.grammars = speechRecognitionList
     recognition.lang = 'en-US'
@@ -170,7 +170,7 @@ function BingoCtrl($scope) {
     $scope.bingoBoard = binBy(5, phrases)
     $scope.transcript = ''
     $scope.startRecognizing = () => {
-        recognition = recognizeSpeech(phrases)
+        let recognition = recognizeSpeech(phrases)
         recognition.onresult = (event) => {
             let lastResult = _.last(event.results)[0]
             let speechTranscript = _.toLower(lastResult.transcript)

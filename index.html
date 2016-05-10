@@ -21,7 +21,9 @@
                 </tr>
                 </tbody>
             </table>
-            <button class="btn btn-lg btn-danger" ng-disabled="disabled" ng-click="startRecognizing()">Start bingo</button>
+            <button class="btn btn-lg btn-danger"
+                    ng-click="startRecognizing()">Start bingo
+            </button>
             <div>
                 <p class="phrase">{{transcript}}</p>
                 <p>{{picked|json}}</p>
