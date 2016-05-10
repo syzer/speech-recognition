@@ -4,7 +4,7 @@ Play BS bingo with your friends.
 Use speech detection to mark who had won!. 
 
 
-[bs-bingo-screen]()
+[bs-bingo-screen](https://raw.githubusercontent.com/syzer/speech-recognition/master/docs/bingo-row-completed.png)
 
 
 Use fft and ML classifier to play BS bingo
