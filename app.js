@@ -1,4 +1,4 @@
-function recognizeSpeech(phrases) {
+function recognizeSpeech(phrases, onresult) {
     var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
     var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
     var grammar = '#JSGF V1.0; grammar phrase; public <phrase> = ' + phrases.join(' | ') + ';';
@@ -102,29 +102,48 @@ const similarSounding = (w) => ({
     atm: 'etl',
     atl: 'etl',
     guitar: 'data',
-    'allen tx': 'analytics',
+    allen: 'analytics',
     btl: 'etl',
     bigcommerce: 'e-commerce',
+    big: 'big data',
     buzz: 'fast data',
     call: 'cloud',
     costco: 'kafka',
+    'costco.com': 'kafka',
     common: 'column oriented',
-    charlene: 'charlene',
+    commerce: 'e-commerce',
+    charlene: 'sharding',
     charting: 'sharding',
+    chardon: 'sharding',
     charging: 'sharding',
     columbia: 'column oriented',
     construction: 'unstructured data',
+    dictator: 'big data',
     ecommerce: 'e-commerce',
+    finding: 'sharding',
     harding: 'sharding',
     hi: 'hive',
+    high: 'hive',
+    how: 'hadoop',
+    honda: 'hadoop',
+    'high-end': 'hive',
+    'high-fiber': 'hive',
     higher: 'hive',
+    hydro: 'hadoop',
+    home: 'column oriented',
     mount: 'mapreduce',
+    produce: 'mapreduce',
+    news: 'mapreduce',
     reduce: 'mapreduce',
+    juice: 'mapreduce',
     santa: 'fast data',
     patagonia: 'data volume',
     oriented: 'column oriented',
+    oriental: 'column oriented',
     reviews: 'mapreduce',
+    sleep: 'no sequel',
     scrub: 'scrum',
+    scope: 'scoop',
     scram: 'scrum',
     school: 'scoop',
     skyrim: 'scrum',
@@ -132,14 +151,21 @@ const similarSounding = (w) => ({
     structured: 'unstructured data',
     sequel: 'no sequel',
     squad: 'scoop',
+    roadhouse: 'data warehouse',
+    rhel: 'etl',
+    real: 'real-time',
+    house: 'data warehouse',
     translator: 'fast data',
+    tractor: 'unstructured data',
+    time: 'real-time',
     understanding: 'sharding',
-    verdict: 'vertical'
+    verdict: 'vertical database',
+    volume: 'data volume',
+    vertical: 'vertical database',
+    warehouse: 'data warehouse'
 }[w] || w)
 
 function BingoCtrl($scope) {
-    let recognition
-
     $scope.picked = []
     $scope.bingoBoard = binBy(5, phrases)
     $scope.transcript = ''
@@ -152,7 +178,7 @@ function BingoCtrl($scope) {
                 .map(similarSounding)
                 .join(' ')
 
-            console.log(speechTranscript, lastResult.transcript, lastResult.confidence)
+            console.log(speechTranscript, ':', lastResult.transcript, lastResult.confidence)
 
             $scope.transcript += ' ' + speechTranscript
             $scope.picked = _.uniq($scope.picked
