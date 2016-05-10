@@ -1,16 +1,24 @@
-# WIP!
+# WAT
+
+Play BS bingo with your friends.
+Use speech detection to mark who had won!. 
+
+
+[bs-bingo-screen]()
+
 
 Use fft and ML classifier to play BS bingo
 [bs-bingo](https://www.mongodb.com/post/40096038528/dilbert-takes-on-big-data-buzzword-bingo)
 
-transription.map => [guessWords].filter => [matchedWords] 
- [totalMatcheWords].concat([matchedWords])
-  hilight/check end game
+
 
 
 # How
 
 ```
+bower install
 serve ./ -p 9009
 ```
-Verified    to work with *chrome*
+
+Then please visit: [localhost:9009](localhost:9009)
+Verified to work with *chrome*.

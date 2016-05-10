@@ -69,7 +69,7 @@ angular
     .controller('BingoCtrl', BingoCtrl)
     .filter('capitalize', capitalize)
 
-const phrases = [
+const phrases = _.shuffle([
     'column oriented',
     'vertical database',
     'sharding',
@@ -95,7 +95,7 @@ const phrases = [
     'data warehouse',
     'e-commerce',
     'performance'
-]
+])
 
 const similarSounding = (w) => ({
     atm: 'etl',
@@ -204,6 +204,7 @@ function BingoCtrl($scope) {
                 .concat(newMatchedWords(speechTranscript)))
             $scope.picked.map(w => maybeMark(w, $scope.bingoBoard, bingoBitmap))
             $scope.isBingo = isBingo(bingoBitmap)
+            console.log($scope.isBingo)
             
             $scope.$apply()
         })
