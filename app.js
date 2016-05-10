@@ -13,12 +13,13 @@ function recognizeSpeech(phrases, onresult) {
 
     recognition.start()
     recognition.onspeechend = () => {
+        console.log('end', new Date())
     }
     recognition.onerror = (event) => console.error(event)
     recognition.onresult = onresult
 }
 
-let bingoMatch = [
+let bingoBitmap = [
     _.times(5, _.constant(0)),
     _.times(5, _.constant(0)),
     _.times(5, _.constant(0)),
@@ -26,16 +27,16 @@ let bingoMatch = [
     _.times(5, _.constant(0))
 ]
 
-const isBingoRows = (arr) => !! arr.find(
+const isBingoRows = (arr) => !!arr.find(
     line => line.reduce(_.add) === line.length
 )
 
-const isBingoCols = (bingoMatch) => {
-    for (let i in bingoMatch) {
+const isBingoCols = (bingoBitmap) => {
+    for (let i in bingoBitmap) {
         let sum = 0
-        for (let j in bingoMatch) {
-            sum += bingoMatch[j][i]
-            if (sum === bingoMatch.length) {
+        for (let j in bingoBitmap) {
+            sum += bingoBitmap[j][i]
+            if (sum === bingoBitmap.length) {
                 return true
             }
         }
@@ -45,11 +46,11 @@ const isBingoCols = (bingoMatch) => {
 
 const isBingo = (arr) => isBingoCols(arr) || isBingoRows(arr)
 
-const maybeMark = (phrase, bingoBoard, bingoMatch) => {
+const maybeMark = (phrase, bingoBoard, bingoBitmap) => {
     bingoBoard.filter((row, i) => {
         return row.filter((word, j)=> {
             if (phrase === word) {
-                bingoMatch[i][j] = 1
+                bingoBitmap[i][j] = 1
                 return true
             }
             return false
@@ -68,7 +69,7 @@ angular
     .controller('BingoCtrl', BingoCtrl)
     .filter('capitalize', capitalize)
 
-const phrases = _.shuffle([
+const phrases = [
     'column oriented',
     'vertical database',
     'sharding',
@@ -94,11 +95,12 @@ const phrases = _.shuffle([
     'data warehouse',
     'e-commerce',
     'performance'
-])
+]
 
 const similarSounding = (w) => ({
     atm: 'etl',
     atl: 'etl',
+    'atl.com': 'etl',
     guitar: 'data',
     allen: 'analytics',
     btl: 'etl',
@@ -106,7 +108,9 @@ const similarSounding = (w) => ({
     big: 'big data',
     buzz: 'fast data',
     call: 'cloud',
+    cop: 'kafka',
     costco: 'kafka',
+    cough: 'kafka',
     'costco.com': 'kafka',
     common: 'column oriented',
     commerce: 'e-commerce',
@@ -120,6 +124,7 @@ const similarSounding = (w) => ({
     chrome: 'scrum',
     cream: 'scrum',
     crime: 'scrum',
+    california: 'data volume',
     dictator: 'big data',
     ecommerce: 'e-commerce',
     finding: 'sharding',
@@ -135,6 +140,8 @@ const similarSounding = (w) => ({
     hydro: 'hadoop',
     home: 'column oriented',
     horton: 'data volume',
+    knife: 'hive',
+    life: 'hive',
     love: 'data volume',
     mount: 'mapreduce',
     produce: 'mapreduce',
@@ -151,10 +158,13 @@ const similarSounding = (w) => ({
     sleep: 'no sequel',
     scrub: 'scrum',
     scope: 'scoop',
+    scuba: 'scoop',
     scram: 'scrum',
     school: 'scoop',
     skyrim: 'scrum',
+    spawn: 'scoop',
     starting: 'sharding',
+    strong: 'scrum',
     structured: 'unstructured data',
     sequel: 'no sequel',
     squad: 'scoop',
@@ -174,6 +184,7 @@ const similarSounding = (w) => ({
 }[w] || w)
 
 function BingoCtrl($scope) {
+    $scope.isBingo = isBingo(bingoBitmap)
     $scope.picked = []
     $scope.bingoBoard = binBy(5, phrases)
     $scope.transcript = ''
@@ -184,13 +195,14 @@ function BingoCtrl($scope) {
                 .split(' ')
                 .map(similarSounding)
                 .join(' ')
-
             console.log(speechTranscript, ':', lastResult.transcript, lastResult.confidence)
 
             $scope.transcript += ' ' + speechTranscript
             $scope.picked = _.uniq($scope.picked
                 .concat(newMatchedWords(speechTranscript)))
-
+            $scope.picked.map(w => maybeMark(w, $scope.bingoBoard, bingoBitmap))
+            $scope.isBingo = isBingo(bingoBitmap)
+            
             $scope.$apply()
         })
 
