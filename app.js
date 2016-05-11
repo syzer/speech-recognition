@@ -128,6 +128,7 @@ const similarSounding = (w) => ({
     conundrum: 'cassandra',
     dictator: 'big data',
     ecommerce: 'e-commerce',
+    athleta: 'fast data',
     finding: 'sharding',
     firstdata: 'fast data',
     first: 'fast data',
