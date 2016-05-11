@@ -19,13 +19,9 @@ function recognizeSpeech(phrases, onresult) {
     recognition.onresult = onresult
 }
 
-let bingoBitmap = [
-    _.times(5, _.constant(0)),
-    _.times(5, _.constant(0)),
-    _.times(5, _.constant(0)),
-    _.times(5, _.constant(0)),
+let bingoBitmap = _.times(5, _.constant(
     _.times(5, _.constant(0))
-]
+))
 
 const isBingoRows = (arr) => !!arr.find(
     line => line.reduce(_.add) === line.length
@@ -163,6 +159,7 @@ const similarSounding = (w) => ({
     patagonia: 'data volume',
     oriented: 'column oriented',
     oriental: 'column oriented',
+    oregon: 'column oriented',
     reviews: 'mapreduce',
     roaming: 'data volume',
     mattresses: 'mapreduce',
