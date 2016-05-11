@@ -24,7 +24,7 @@ let bingoBitmap = _.times(5, _.constant(
 ))
 
 const isBingoRows = (arr) => !!arr.find(
-    line => line.reduce(_.add) === line.length
+    row => row.reduce(_.add) === row.length
 )
 
 const isBingoCols = (bingoBitmap) => {
