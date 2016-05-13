@@ -1,7 +1,7 @@
 # WAT
 
 Play BS bingo with your friends.
-Use speech detection to mark who had won!. 
+Use speech detection to mark who had won!.
 
 
 ![bs-bingo-screen](https://raw.githubusercontent.com/syzer/speech-recognition/master/docs/bingo-row-completed.png)
