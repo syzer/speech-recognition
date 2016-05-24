@@ -104,6 +104,7 @@ const similarSounding = (w) => ({
     big: 'big data',
     buzz: 'fast data',
     call: 'cloud',
+    clown: 'cloud',
     cop: 'kafka',
     costco: 'kafka',
     cough: 'kafka',
