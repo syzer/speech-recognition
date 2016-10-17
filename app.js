@@ -43,15 +43,15 @@ const isBingoCols = (bingoBitmap) => {
 const isBingo = (arr) => isBingoCols(arr) || isBingoRows(arr)
 
 const maybeMark = (phrase, bingoBoard, bingoBitmap) =>
-    bingoBoard.filter((row, i) => {
-        return row.filter((word, j)=> {
+    bingoBoard.filter((row, i) =>
+        row.filter((word, j) => {
             if (_.toLower(phrase) === _.toLower(word)) {
-                bingoBitmap[i][j] = 1
+                bingoBitmap[ i ][ j ] = 1
                 return true
             }
             return false
         })
-    })
+    )
 
 
 const binBy = (groupSize, arr) => (arr).reduce((acc, curr, i) => {
