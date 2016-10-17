@@ -230,7 +230,5 @@ function BingoCtrl($scope) {
 
 // http://stackoverflow.com/questions/30207272/capitalize-the-first-letter-of-string-in-angularjs
 function capitalize() {
-    return function (str) {
-        return str.charAt(0).toUpperCase() + str.slice(1)
-    }
+    return str => str.charAt(0).toUpperCase() + str.slice(1)
 }
