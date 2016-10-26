@@ -15,6 +15,7 @@ Use fft and ML classifier to play BS bingo
 
 ```
 bower install
+npm install -g serve
 serve ./ -p 9009
 ```
 
