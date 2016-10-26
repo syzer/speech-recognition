@@ -18,5 +18,5 @@ bower install
 serve ./ -p 9009
 ```
 
-Then please visit: [localhost:9009](localhost:9009)
+Then please visit: [http://localhost:9009](http://localhost:9009)
 Verified to work with *chrome*.
