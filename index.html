@@ -13,11 +13,11 @@
             <table class="table table-bordered">
                 <tbody ng-repeat="row in bingoBoard">
                 <tr class="text-center">
-                    <td ng-class="isHighlight(row[0])">{{row[0] | capitalize}}</td>
-                    <td ng-class="isHighlight(row[1])">{{row[1] | capitalize}}</td>
-                    <td ng-class="isHighlight(row[2])">{{row[2] | capitalize}}</td>
-                    <td ng-class="isHighlight(row[3])">{{row[3] | capitalize}}</td>
-                    <td ng-class="isHighlight(row[4])">{{row[4] | capitalize}}</td>
+                    <td ng-click="onCellClick(0, $index)" ng-class="isHighlight(row[0])">{{row[0] | capitalize}}</td>
+                    <td ng-click="onCellClick(1, $index)" ng-class="isHighlight(row[1])">{{row[1] | capitalize}}</td>
+                    <td ng-click="onCellClick(2, $index)" ng-class="isHighlight(row[2])">{{row[2] | capitalize}}</td>
+                    <td ng-click="onCellClick(3, $index)" ng-class="isHighlight(row[3])">{{row[3] | capitalize}}</td>
+                    <td ng-click="onCellClick(4, $index)" ng-class="isHighlight(row[4])">{{row[4] | capitalize}}</td>
                 </tr>
                 </tbody>
             </table>

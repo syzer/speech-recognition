@@ -31,7 +31,7 @@ const isBingoCols = (bingoBitmap) => {
     for (let i in bingoBitmap) {
         let sum = 0
         for (let j in bingoBitmap) {
-            sum += bingoBitmap[j][i]
+            sum += bingoBitmap[ j ][ i ]
             if (sum === bingoBitmap.length) {
                 return true
             }
@@ -55,8 +55,8 @@ const maybeMark = (phrase, bingoBoard, bingoBitmap) =>
 
 
 const binBy = (groupSize, arr) => (arr).reduce((acc, curr, i) => {
-    acc[i % groupSize] = acc[i % groupSize] || []
-    acc[i % groupSize].push(curr)
+    acc[ i % groupSize ] = acc[ i % groupSize ] || []
+    acc[ i % groupSize ].push(curr)
     return acc
 }, [])
 
@@ -195,16 +195,22 @@ const similarSounding = (w) => ({
     vertical: 'vertical database',
     warehouse: 'data warehouse',
     warehousing: 'data warehouse'
-}[w] || w)
+}[ w ] || w)
 
 function BingoCtrl($scope) {
     $scope.bingoBitmap = bingoBitmap
     $scope.isBingo = isBingo(bingoBitmap)
     $scope.picked = []
     $scope.bingoBoard = binBy(5, phrases)
+
+    $scope.onCellClick = (parent, index) => {
+        console.log(parent, index)
+        //TODO
+    }
+
     $scope.startRecognizing = () =>
         recognizeSpeech(phrases, (event) => {
-            const lastResult = _.last(event.results)[0]
+            const lastResult = _.last(event.results)[ 0 ]
             const speechTranscript = _.toLower(lastResult.transcript)
                 .split(' ')
                 .map(similarSounding)
