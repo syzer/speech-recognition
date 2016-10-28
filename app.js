@@ -94,6 +94,7 @@ const phrases = _.shuffle([
 ])
 
 const similarSounding = (w) => ({
+    alldata: 'fast data',
     atm: 'etl',
     atl: 'etl',
     'atl.com': 'etl',
